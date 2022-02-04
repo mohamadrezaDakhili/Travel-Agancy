@@ -10,17 +10,19 @@ import {
 } from "@mui/material";
 import { ICard, ICardItem } from "../../types/Card";
 import { makeStyles } from "@mui/styles";
+import { Box } from "@mui/system";
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
-  root: {
-    // margin: "1rem",
-  },
   title: {
     display: "-webkit-box",
     WebkitLineClamp: 2,
     WebkitBoxOrient: "vertical",
     overflow: "hidden",
     textOverflow: "ellipsis",
+    fontSize: "16px",
+    fontWeight: 600,
+    height: "50px",
   },
   description: {
     display: "-webkit-box",
@@ -29,19 +31,30 @@ const useStyles = makeStyles({
     overflow: "hidden",
     textOverflow: "ellipsis",
   },
+  price: {
+    fontSize: "13px",
+    color: "#bebebe",
+    marginRight: "8px",
+    paddingLeft: "8px",
+  },
 });
 
 const CardTravel: FC<ICardItem> = (props) => {
   const classes = useStyles();
   const [cardData, setCardData] = useState<ICard>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setCardData(props.item);
   }, [props.item]);
 
   return (
-    <Card className={classes.root} sx={{ maxWidth: 345 }}>
-      <CardActionArea>
+    <Card sx={{ maxWidth: 345 }}>
+      <CardActionArea
+        onClick={() => {
+          navigate(`/${cardData?.id}`)
+        }}
+      >
         <CardMedia
           component="img"
           height="180"
@@ -49,7 +62,7 @@ const CardTravel: FC<ICardItem> = (props) => {
           alt={cardData?.title}
         />
         <CardContent>
-          <Typography gutterBottom variant="h6" className={classes.title}>
+          <Typography gutterBottom className={classes.title}>
             {cardData?.title}
           </Typography>
           <Typography
@@ -62,9 +75,13 @@ const CardTravel: FC<ICardItem> = (props) => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        {/* <Button size="small" color="primary">
           Share
-        </Button>
+        </Button> */}
+        <Box display={"flex"}>
+          <Typography className={classes.price}>Price:</Typography>
+          {cardData?.price}
+        </Box>
       </CardActions>
     </Card>
   );
