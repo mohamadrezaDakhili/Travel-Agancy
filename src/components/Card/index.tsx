@@ -1,17 +1,17 @@
 import React, { FC, useState, useEffect } from "react";
 import {
-  Button,
   Card,
   CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
+  Skeleton,
   Typography,
 } from "@mui/material";
 import { ICard, ICardItem } from "../../types/Card";
 import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/system";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   title: {
@@ -32,7 +32,6 @@ const useStyles = makeStyles({
     textOverflow: "ellipsis",
   },
   price: {
-    fontSize: "13px",
     color: "#bebebe",
     marginRight: "8px",
     paddingLeft: "8px",
@@ -43,47 +42,52 @@ const CardTravel: FC<ICardItem> = (props) => {
   const classes = useStyles();
   const [cardData, setCardData] = useState<ICard>();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setCardData(props.item);
+    setIsLoading(false);
   }, [props.item]);
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea
-        onClick={() => {
-          navigate(`/${cardData?.id}`)
-        }}
-      >
-        <CardMedia
-          component="img"
-          height="180"
-          image={cardData?.imageUrl}
-          alt={cardData?.title}
-        />
-        <CardContent>
-          <Typography gutterBottom className={classes.title}>
-            {cardData?.title}
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            className={classes.description}
+    <>
+      {isLoading ? (
+        <Skeleton variant="rectangular" width={345} height={369} style={{borderRadius:"12px"}} />
+      ) : (
+        <Card sx={{ maxWidth: 345 }}>
+          <CardActionArea
+            onClick={() => {
+              navigate(`/${cardData?.id}`);
+            }}
           >
-            {cardData?.description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        {/* <Button size="small" color="primary">
-          Share
-        </Button> */}
-        <Box display={"flex"}>
-          <Typography className={classes.price}>Price:</Typography>
-          {cardData?.price}
-        </Box>
-      </CardActions>
-    </Card>
+            <CardMedia
+              component="img"
+              height="180"
+              image={cardData?.imageUrl}
+              alt={cardData?.title}
+            />
+            <CardContent>
+              <Typography gutterBottom className={classes.title}>
+                {cardData?.title}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                className={classes.description}
+              >
+                {cardData?.description}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+            <Box display={"flex"}>
+              <Typography className={classes.price} variant='body2'>Price:</Typography>
+              {cardData?.price}
+            </Box>
+          </CardActions>
+        </Card>
+      )}
+    </>
   );
 };
 
