@@ -7,22 +7,25 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import CustomSnackbar from "./components/Snackbar";
 import Header from "./components/Header";
+import Bucket from "./pages/Bucket/Bucket";
 function App() {
   return (
     <Provider store={store}>
-      <Header
-        children={
-          <>
-            <Router>
+      <CustomSnackbar />
+
+      <Router>
+        <Header
+          children={
+            <>
               <Routes>
-                <Route path="/" element={<Resorts />} />
+                <Route path={`/bucket`} element={<Bucket />} />
                 <Route path={`/:id`} element={<ResortsDetail />} />
+                <Route path="/" element={<Resorts />} />
               </Routes>
-            </Router>
-            <CustomSnackbar />
-          </>
-        }
-      ></Header>
+            </>
+          }
+        ></Header>
+      </Router>
     </Provider>
   );
 }

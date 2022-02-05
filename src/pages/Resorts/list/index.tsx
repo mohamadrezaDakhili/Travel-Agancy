@@ -42,13 +42,16 @@ const Resorts = () => {
           position={isMobile ? "relative" : "sticky"}
           alignSelf={"flex-start"}
           left={"1rem"}
-          top={"1rem"}
+          top={"5rem"}
           marginRight="1rem"
           marginBottom="2rem"
           width={isMobile ? "100%" : "auto"}
           display=" flex"
           flexDirection="column"
           alignItems="center"
+          padding="1rem"
+          borderRadius={"1rem"}
+          style={{ background: "white" }}
         >
           <FilterBox />
           <SortBox />

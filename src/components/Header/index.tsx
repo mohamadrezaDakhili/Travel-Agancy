@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -8,6 +8,9 @@ import Slide from "@mui/material/Slide";
 import { Badge, Box, IconButton } from "@mui/material";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
 import HomeIcon from "@mui/icons-material/Home";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 interface Props {
   /**
    * Injected by the documentation to work in an iframe.
@@ -34,6 +37,8 @@ function HideOnScroll(props: Props) {
 }
 
 const Header = (props: Props) => {
+  const [first, setfirst] = useState("");
+  let navigate = useNavigate();
   return (
     <>
       <CssBaseline />
@@ -57,7 +62,14 @@ const Header = (props: Props) => {
                     <HomeIcon />
                   </Badge>
                 </IconButton>
-                <IconButton size="large" aria-label="home" color="inherit">
+                <IconButton
+                  size="large"
+                  aria-label="home"
+                  color="inherit"
+                  onClick={() => {
+                    navigate("/bucket");
+                  }}
+                >
                   <Badge badgeContent={17} color="error">
                     <LocalGroceryStoreIcon />
                   </Badge>
