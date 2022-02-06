@@ -9,6 +9,9 @@ const initialState: IAllReducer = {
     servant: "info",
     open: false,
   },
+  bucket: {
+    list: [],
+  },
 };
 
 const allReducer: Reducer<IAllReducer, any> = (
@@ -26,6 +29,18 @@ const allReducer: Reducer<IAllReducer, any> = (
       };
     }
 
+    case ActionTypeEnum.bucketList: {
+      return {
+        ...state,
+        bucket: {
+          ...state.bucket,
+          list: state.bucket.list.some((item) => action.payload.id == item.id)
+            ? [...state.bucket.list]
+            : [...state.bucket.list, action.payload],
+        },
+      };
+    }
+
     default:
       return state;
   }
@@ -34,4 +49,8 @@ const getSettingsSnackbar = (state: { allReducer: IAllReducer }) => {
   return state.allReducer.snackbar;
 };
 
-export { allReducer, getSettingsSnackbar };
+const getBucketList = (state: { allReducer: IAllReducer }) => {
+  return state.allReducer.bucket.list;
+};
+
+export { allReducer, getSettingsSnackbar, getBucketList };

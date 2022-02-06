@@ -11,8 +11,9 @@ import { useParams } from "react-router";
 import { makeStyles } from "@mui/styles";
 import { ICard } from "../../../types/Card";
 import { DataDetail } from "../../../utils/DataDetail";
-import { useDispatch } from "react-redux";
-import { snackbarAction } from "../../../redux/action";
+import { useDispatch, useSelector } from "react-redux";
+import { bucketListAction, snackbarAction } from "../../../redux/action";
+import { getBucketList } from "../../../redux/reducer";
 
 const useStyles = makeStyles({
   root: {
@@ -44,9 +45,10 @@ const useStyles = makeStyles({
   },
   buttonBucket: {
     width: "100%",
+    marginTop: "8px",
   },
   BoxPrice: {
-    height: "200px",
+    height: "240px",
     background: "#eeeeee",
     borderRadius: "8px",
     padding: "1rem",
@@ -65,12 +67,21 @@ const ResortsDetail = () => {
   const [itemDetail, setItemDetail] = useState<ICard>();
   let { id } = useParams();
   const dispatch = useDispatch();
+  const getBucketListRedux = useSelector(getBucketList);
+  const [disabledButton, setDisabledButton] = useState(false);
+
+  useEffect(() => {
+    getBucketListRedux.some((item) => itemDetail?.id == item.id)
+      ? setDisabledButton(true)
+      : setDisabledButton(false);
+  }, [getBucketListRedux, itemDetail]);
 
   useEffect(() => {
     setItemDetail(DataDetail(Number(id)));
   }, [id]);
 
   const handleClick = () => {
+    dispatch(bucketListAction(itemDetail));
     dispatch(
       snackbarAction({
         message: `This item was added to the list`,
@@ -121,6 +132,7 @@ const ResortsDetail = () => {
               </Box>
 
               <Button
+                disabled={disabledButton}
                 variant="contained"
                 className={classes.buttonBucket}
                 color="success"
