@@ -63,7 +63,13 @@ const Header = (props: Props) => {
                 <Typography variant="h5">Travel Agancy</Typography>
               </Box>
               <Box>
-                <IconButton size="large" color="inherit">
+                <IconButton
+                  size="large"
+                  color="inherit"
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                >
                   <HomeIcon />
                 </IconButton>
                 <IconButton
