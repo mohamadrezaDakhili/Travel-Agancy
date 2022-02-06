@@ -46,7 +46,7 @@ const allReducer: Reducer<IAllReducer, any> = (
 
     case ActionTypeEnum.searchItemList: {
       let result: ICard[] = [];
-      state.bucket.list.forEach((val) => {
+      data.forEach((val) => {
         if (
           val &&
           val.title.toLowerCase().includes(action.payload.item.toLowerCase())
@@ -67,6 +67,23 @@ const allReducer: Reducer<IAllReducer, any> = (
           ...state.bucket,
           list: state.bucket.list.filter((el) => el.id !== action.payload.id),
         },
+      };
+    }
+
+    case ActionTypeEnum.sortByPriceList: {
+      let result: ICard[] = [];
+      data.forEach((val) => {
+        if (
+          val &&
+          Number(val.price.split("$")[0]) > action.payload.item[0] &&
+          Number(val.price.split("$")[0]) < action.payload.item[1]
+        ) {
+          result.push(val);
+        }
+      });
+      return {
+        ...state,
+        list: result,
       };
     }
 

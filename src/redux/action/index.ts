@@ -19,3 +19,8 @@ export const searchTitleListAction = (payload: { item: string }) => ({
   type: ActionTypeEnum.searchItemList,
   payload,
 });
+
+export const sortByPriceListAction = (payload: { item: number[] }) => ({
+  type: ActionTypeEnum.sortByPriceList,
+  payload,
+});

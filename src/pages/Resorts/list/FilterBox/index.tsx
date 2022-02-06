@@ -3,10 +3,9 @@ import { Box, TextField, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
-import { CustomTextField } from "../CustomTextField";
-import data from "../../utils/data.json";
 import { useDispatch } from "react-redux";
-import { searchTitleListAction } from "../../redux/action";
+import { CustomTextField } from "../../../../components/CustomTextField";
+import { searchTitleListAction } from "../../../../redux/action";
 
 const useStyles = makeStyles({
   root: {

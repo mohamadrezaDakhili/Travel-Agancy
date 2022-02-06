@@ -3,11 +3,12 @@ import { Container, Grid, Pagination, TablePagination } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import CardTravel from "../../../components/Card";
-import FilterBox from "../../../components/FilterBox";
-import SortBox from "../../../components/SortBox";
-import data from "../../../utils/data.json";
 import useDevice from "../../../hooks/useDevice";
 import { ICard } from "../../../types/Card";
+import { useSelector } from "react-redux";
+import { getList } from "../../../redux/reducer";
+import SortBox from "./SortBox";
+import FilterBox from "./FilterBox";
 
 const Resorts = () => {
   const { isMobile } = useDevice();
@@ -17,14 +18,15 @@ const Resorts = () => {
     limit: 20,
     totalPage: 1,
   });
+  const allData = useSelector(getList);
 
   useEffect(() => {
     setPaginationData({
       ...paginationData,
-      totalPage: Math.ceil(data.length / 20),
+      totalPage: Math.ceil(allData.length / 20),
     });
-    setTravelData(data.slice(0, 20));
-  }, [data]);
+    setTravelData(allData.slice(0, 20));
+  }, [allData]);
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     const preItemsIndex = (value - 1) * 20;
@@ -32,7 +34,7 @@ const Resorts = () => {
       ...paginationData,
       page: value,
     });
-    setTravelData(data.slice(preItemsIndex, preItemsIndex + 20));
+    setTravelData(allData.slice(preItemsIndex, preItemsIndex + 20));
     window.scrollTo(0, 0);
   };
   return (

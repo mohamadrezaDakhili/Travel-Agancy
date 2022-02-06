@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import AddIcon from "@mui/icons-material/Add";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
-import { CustomSlider } from "../CustomSlider";
+import { useDispatch } from "react-redux";
+import { CustomSlider } from "../../../../components/CustomSlider";
+import { sortByPriceListAction } from "../../../../redux/action";
 
 const useStyles = makeStyles({
   root: {
@@ -25,10 +27,12 @@ function valuetext(value: number) {
 
 const SortBox = () => {
   const classes = useStyles();
-  const [value, setValue] = useState<number[]>([0, 100]);
+  const [value, setValue] = useState<number[]>([0, 2000]);
+  const dispatch = useDispatch();
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
+    dispatch(sortByPriceListAction({ item: newValue as number[] }));
   };
 
   return (
@@ -39,7 +43,7 @@ const SortBox = () => {
 
         <Grid container spacing={2} alignItems="center">
           <Grid item>
-            <HorizontalRuleIcon fontSize="small"/>
+            <HorizontalRuleIcon fontSize="small" />
           </Grid>
           <Grid item xs>
             <CustomSlider
@@ -50,10 +54,12 @@ const SortBox = () => {
               getAriaValueText={valuetext}
               value={value}
               valueLabelDisplay="auto"
+              min={0}
+              max={2000}
             />
           </Grid>
           <Grid item>
-            <AddIcon fontSize="small"/>
+            <AddIcon fontSize="small" />
           </Grid>
         </Grid>
       </Box>
