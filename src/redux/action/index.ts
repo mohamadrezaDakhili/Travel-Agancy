@@ -10,3 +10,12 @@ export const bucketListAction = (payload: any) => ({
   type: ActionTypeEnum.bucketList,
   payload,
 });
+export const deleteItemBucketListAction = (payload: { id: number }) => ({
+  type: ActionTypeEnum.deleteItemBucketList,
+  payload,
+});
+
+export const searchTitleListAction = (payload: { item: string }) => ({
+  type: ActionTypeEnum.searchItemList,
+  payload,
+});

@@ -6,4 +6,5 @@ export default interface IAllReducer {
   bucket: {
     list: Array<ICard>;
   };
+  list: ICard[];
 }

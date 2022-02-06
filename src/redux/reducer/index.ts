@@ -1,6 +1,8 @@
 import { Reducer } from "react";
+import { ICard } from "../../types/Card";
 import { ActionTypeEnum } from "../../types/enums/ActionTypeEnum";
 import IAllReducer from "../../types/reducer/allReducer";
+import data from "../../utils/data.json";
 
 const initialState: IAllReducer = {
   snackbar: {
@@ -12,6 +14,7 @@ const initialState: IAllReducer = {
   bucket: {
     list: [],
   },
+  list: data,
 };
 
 const allReducer: Reducer<IAllReducer, any> = (
@@ -41,6 +44,32 @@ const allReducer: Reducer<IAllReducer, any> = (
       };
     }
 
+    case ActionTypeEnum.searchItemList: {
+      let result: ICard[] = [];
+      state.bucket.list.forEach((val) => {
+        if (
+          val &&
+          val.title.toLowerCase().includes(action.payload.item.toLowerCase())
+        ) {
+          result.push(val);
+        }
+      });
+      return {
+        ...state,
+        list: result,
+      };
+    }
+
+    case ActionTypeEnum.deleteItemBucketList: {
+      return {
+        ...state,
+        bucket: {
+          ...state.bucket,
+          list: state.bucket.list.filter((el) => el.id !== action.payload.id),
+        },
+      };
+    }
+
     default:
       return state;
   }
@@ -53,4 +82,7 @@ const getBucketList = (state: { allReducer: IAllReducer }) => {
   return state.allReducer.bucket.list;
 };
 
-export { allReducer, getSettingsSnackbar, getBucketList };
+const getList = (state: { allReducer: IAllReducer }) => {
+  return state.allReducer.list;
+};
+export { allReducer, getSettingsSnackbar, getBucketList, getList };

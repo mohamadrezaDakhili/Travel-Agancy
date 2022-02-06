@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -10,6 +10,8 @@ import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
 import HomeIcon from "@mui/icons-material/Home";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getBucketList } from "../../redux/reducer";
 
 interface Props {
   /**
@@ -37,8 +39,9 @@ function HideOnScroll(props: Props) {
 }
 
 const Header = (props: Props) => {
-  const [first, setfirst] = useState("");
-  let navigate = useNavigate();
+  const getBucketListRedux = useSelector(getBucketList);
+  const navigate = useNavigate();
+
   return (
     <>
       <CssBaseline />
@@ -51,16 +54,17 @@ const Header = (props: Props) => {
               justifyContent="space-between"
               alignItems={"center"}
             >
-              <Typography variant="h5">Travel Agancy</Typography>
+              <Box
+                onClick={() => {
+                  navigate("/");
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                <Typography variant="h5">Travel Agancy</Typography>
+              </Box>
               <Box>
-                <IconButton
-                  size="large"
-                  aria-label="show 17 new notifications"
-                  color="inherit"
-                >
-                  <Badge badgeContent={17} color="error">
-                    <HomeIcon />
-                  </Badge>
+                <IconButton size="large" color="inherit">
+                  <HomeIcon />
                 </IconButton>
                 <IconButton
                   size="large"
@@ -70,7 +74,7 @@ const Header = (props: Props) => {
                     navigate("/bucket");
                   }}
                 >
-                  <Badge badgeContent={17} color="error">
+                  <Badge badgeContent={getBucketListRedux.length} color="error">
                     <LocalGroceryStoreIcon />
                   </Badge>
                 </IconButton>

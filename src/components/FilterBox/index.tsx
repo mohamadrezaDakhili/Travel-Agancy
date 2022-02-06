@@ -4,6 +4,10 @@ import { makeStyles } from "@mui/styles";
 import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import { CustomTextField } from "../CustomTextField";
+import data from "../../utils/data.json";
+import { useDispatch } from "react-redux";
+import { searchTitleListAction } from "../../redux/action";
+
 const useStyles = makeStyles({
   root: {
     background: "#eeeeee",
@@ -13,10 +17,12 @@ const useStyles = makeStyles({
   },
 });
 
-
-
 const FilterBox = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
+    dispatch(searchTitleListAction({ item: event.target.value }));
+  };
 
   return (
     <Box className={classes.root}>
@@ -31,6 +37,7 @@ const FilterBox = () => {
             endAdornment: <SearchIcon />,
           }}
           InputLabelProps={{ style: { fontSize: 12 } }}
+          onChange={handleChange}
         />
       </Box>
     </Box>
