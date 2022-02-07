@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   sortButton: {
     width: "100%",
     fontSize: "10px",
-    marginTop: ".7rem",
+    marginTop: "0.7rem !important",
   },
   boxFilterAndSort: {
     alignSelf: "flex-start",
