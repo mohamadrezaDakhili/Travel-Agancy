@@ -7,4 +7,9 @@ export default interface IAllReducer {
     list: Array<ICard>;
   };
   list: ICard[];
+  pagination: {
+    page: number;
+    limit: number;
+    totalPage: number;
+  };
 }

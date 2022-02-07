@@ -15,6 +15,11 @@ const initialState: IAllReducer = {
     list: [],
   },
   list: data,
+  pagination: {
+    page: 1,
+    limit: 20,
+    totalPage: 1,
+  },
 };
 
 const allReducer: Reducer<IAllReducer, any> = (
@@ -57,6 +62,10 @@ const allReducer: Reducer<IAllReducer, any> = (
       return {
         ...state,
         list: result,
+        pagination: {
+          ...state.pagination,
+          page: 1,
+        },
       };
     }
 
@@ -84,6 +93,43 @@ const allReducer: Reducer<IAllReducer, any> = (
       return {
         ...state,
         list: result,
+        pagination: {
+          ...state.pagination,
+          page: 1,
+        },
+      };
+    }
+
+    case ActionTypeEnum.lowestPriceList: {
+      return {
+        ...state,
+        list: action.payload.arr,
+        pagination: {
+          ...state.pagination,
+          page: 1,
+        },
+      };
+    }
+
+    case ActionTypeEnum.highestPriceList: {
+      return {
+        ...state,
+        list: action.payload.arr,
+        pagination: {
+          ...state.pagination,
+          page: 1,
+        },
+      };
+    }
+
+    case ActionTypeEnum.paginationList: {
+      return {
+        ...state,
+        pagination: {
+          page: action.payload.page,
+          totalPage: action.payload.totalPage,
+          limit: 20,
+        },
       };
     }
 
@@ -102,4 +148,15 @@ const getBucketList = (state: { allReducer: IAllReducer }) => {
 const getList = (state: { allReducer: IAllReducer }) => {
   return state.allReducer.list;
 };
-export { allReducer, getSettingsSnackbar, getBucketList, getList };
+
+const getPaginationList = (state: { allReducer: IAllReducer }) => {
+  return state.allReducer.pagination;
+};
+
+export {
+  allReducer,
+  getSettingsSnackbar,
+  getBucketList,
+  getList,
+  getPaginationList,
+};
