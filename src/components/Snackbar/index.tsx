@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Snackbar from "@mui/material/Snackbar";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import MuiAlert from "@mui/material/Alert";
 import { Slide, SlideProps, SnackbarProps } from "@mui/material";
-
 import { useDispatch, useSelector } from "react-redux";
 import { snackbarAction } from "../../redux/action";
 import { getSettingsSnackbar } from "../../redux/reducer";
@@ -11,7 +10,7 @@ import useDevice from "../../hooks/useDevice";
 type TransitionProps = Omit<SlideProps, "direction">;
 
 function TransitionUp(props: TransitionProps) {
-  const { isMobile, isDesktop } = useDevice();
+  const { isMobile } = useDevice();
 
   return <Slide {...props} direction={isMobile ? "down" : "right"} />;
 }

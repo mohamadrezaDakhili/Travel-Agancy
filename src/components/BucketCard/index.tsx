@@ -1,13 +1,16 @@
 import { Box, IconButton, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import React, { FC } from "react";
+import { FC } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { IBucketCard } from "../../types/BucketCard";
-import { height } from "@mui/system";
 import { useDispatch } from "react-redux";
 import { deleteItemBucketListAction } from "../../redux/action";
 
 const useStyles = makeStyles({
+  root: {
+    display: "flex",
+    padding: "12px 24px",
+  },
   boxCard: {
     width: "100%",
     height: "100px",
@@ -40,10 +43,15 @@ const BucketCard: FC<IBucketCard> = (props) => {
   };
 
   return (
-    <Box display="flex" p="12px 24px">
+    <Box className={classes.root}>
       <Box className={classes.boxCard}>
         <Box display="flex" alignItems={"center"}>
-          <img className={classes.boxImage} src={props.item.imageUrl} />
+          <img
+            loading="lazy"
+            className={classes.boxImage}
+            src={props.item.imageUrl}
+            alt={props.item.title}
+          />
         </Box>
         <Typography variant="body2">{props.item.title}</Typography>
         <Typography ml={"8px"} variant="h6">

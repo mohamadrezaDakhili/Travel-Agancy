@@ -7,6 +7,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { useEffect, useState } from "react";
 import { deleteItemBucketListAction } from "../../redux/action";
 import { useNavigate } from "react-router-dom";
+import EmptyState from "../EmptyState";
 
 const useStyles = makeStyles({
   root: {
@@ -71,15 +72,7 @@ const Bucket = () => {
             </Box>
           </>
         ) : (
-          <Box textAlign={"center"}>
-            <img
-              className={classes.boxEmptyState}
-              src={
-                "https://cdn.dribbble.com/users/3821/screenshots/5673869/attachments/1225509/desert.png"
-              }
-            />
-            <Typography>No item selected yet.</Typography>
-          </Box>
+          <EmptyState />
         )}
       </Box>
     </Container>

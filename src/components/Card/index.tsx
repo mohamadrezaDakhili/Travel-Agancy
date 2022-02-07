@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect } from "react";
 import {
   Button,
   Card,
@@ -17,6 +17,11 @@ import { useDispatch } from "react-redux";
 import { bucketListAction, snackbarAction } from "../../redux/action";
 
 const useStyles = makeStyles({
+  skeleton: {
+    width: "345px",
+    height: "369px",
+    borderRadius: "12px",
+  },
   title: {
     display: "-webkit-box",
     WebkitLineClamp: 2,
@@ -38,6 +43,12 @@ const useStyles = makeStyles({
     color: "#bebebe",
     marginRight: "8px",
     paddingLeft: "8px",
+  },
+  boxPriceAndBucket: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%",
+    alignItems: "center",
   },
 });
 
@@ -66,12 +77,7 @@ const CardTravel: FC<ICardItem> = (props) => {
   return (
     <>
       {isLoading ? (
-        <Skeleton
-          variant="rectangular"
-          width={345}
-          height={369}
-          style={{ borderRadius: "12px" }}
-        />
+        <Skeleton className={classes.skeleton} variant="rectangular" />
       ) : (
         <Card sx={{ maxWidth: 345 }}>
           <CardActionArea
@@ -84,6 +90,7 @@ const CardTravel: FC<ICardItem> = (props) => {
               height="180"
               image={cardData?.imageUrl}
               alt={cardData?.title}
+              loading="lazy"
             />
             <CardContent>
               <Typography gutterBottom className={classes.title}>
@@ -99,12 +106,7 @@ const CardTravel: FC<ICardItem> = (props) => {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Box
-              display={"flex"}
-              justifyContent="space-between"
-              width="100%"
-              alignItems={"center"}
-            >
+            <Box className={classes.boxPriceAndBucket}>
               <Box display={"flex"}>
                 <Typography className={classes.price} variant="body2">
                   Price:
