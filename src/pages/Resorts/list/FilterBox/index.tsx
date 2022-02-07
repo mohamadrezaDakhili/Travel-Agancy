@@ -1,7 +1,6 @@
 import React from "react";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
 import { CustomTextField } from "../../../../components/CustomTextField";
@@ -26,7 +25,7 @@ const FilterBox = () => {
   return (
     <Box className={classes.root}>
       <Typography>Filter By:</Typography>
-      <Box mt="12px">
+      <Box mt="0.7rem">
         <CustomTextField
           variant="outlined"
           size="small"

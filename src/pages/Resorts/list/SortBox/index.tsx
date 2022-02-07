@@ -13,11 +13,11 @@ const useStyles = makeStyles({
     width: "200px",
     padding: "0.5rem",
     borderRadius: "8px",
-    marginTop: "24px",
+    marginTop: "1.25rem",
   },
   price: {
     fontSize: "14px",
-    margin: "12px 0px",
+    margin: "0.75rem 0px",
   },
 });
 

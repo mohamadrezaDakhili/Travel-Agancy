@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Container,
-  Grid,
-  Pagination,
-  TablePagination,
-} from "@mui/material";
+import { Button, Container, Grid, Pagination } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import CardTravel from "../../../components/Card";
@@ -22,11 +16,36 @@ import {
   paginationListAction,
 } from "../../../redux/action";
 import { highestListCompare, lowestListCompare } from "../../../utils/Compare";
+import EmptyState from "../../EmptyState";
 
 const useStyles = makeStyles({
   sortButton: {
-    width: "100px",
+    width: "100%",
     fontSize: "10px",
+    marginTop: ".7rem",
+  },
+  boxFilterAndSort: {
+    alignSelf: "flex-start",
+    left: "1rem",
+    top: "5rem",
+    marginRight: "1rem",
+    marginBottom: "2rem",
+    display: " flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "1rem",
+    borderRadius: "1rem",
+    background: "white",
+  },
+  boxButtonSort: {
+    width: "100%",
+    display: "flex",
+    marginTop: "1rem",
+    flexDirection: "column",
+  },
+  boxPagination: {
+    justifyContent: "center",
+    marginTop: "2.5rem",
   },
 });
 
@@ -49,7 +68,10 @@ const Resorts = () => {
     setTravelData(allData.slice(0, 20));
   }, [allData]);
 
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handleChangePagination = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
     const preItemsIndex = (value - 1) * 20;
     dispatch(
       paginationListAction({
@@ -60,7 +82,6 @@ const Resorts = () => {
     setTravelData(allData.slice(preItemsIndex, preItemsIndex + 20));
     window.scrollTo(0, 0);
   };
-
   const handleClickHighest = () => {
     dispatch(
       paginationListAction({ page: 1, totalPage: paginationRedux.totalPage })
@@ -78,36 +99,13 @@ const Resorts = () => {
     <Container disableGutters maxWidth={"xl"} style={{ padding: "1rem" }}>
       <Box display={"flex"} flexDirection={isMobile ? "column" : "row"}>
         <Box
+          className={classes.boxFilterAndSort}
           position={isMobile ? "inherit" : "sticky"}
-          alignSelf={"flex-start"}
-          left={"1rem"}
-          top={"5rem"}
-          marginRight="1rem"
-          marginBottom="2rem"
           width={isMobile ? "100%" : "auto"}
-          display=" flex"
-          flexDirection="column"
-          alignItems="center"
-          padding="1rem"
-          borderRadius={"1rem"}
-          style={{ background: "white" }}
         >
           <FilterBox />
           <SortBox />
-          <Box
-            width="100%"
-            display="flex"
-            justifyContent={"space-between"}
-            mt="1rem"
-          >
-            <Button
-              className={classes.sortButton}
-              color="success"
-              variant="contained"
-              onClick={handleClicklowest}
-            >
-              Lowest price
-            </Button>
+          <Box className={classes.boxButtonSort}>
             <Button
               className={classes.sortButton}
               color="success"
@@ -116,21 +114,33 @@ const Resorts = () => {
             >
               Highest price
             </Button>
+            <Button
+              className={classes.sortButton}
+              color="success"
+              variant="contained"
+              onClick={handleClicklowest}
+            >
+              Lowest price
+            </Button>
           </Box>
         </Box>
-        <Grid container spacing={3} justifyContent="center">
-          {travelData?.map((item, index) => (
-            <Grid item key={index}>
-              <CardTravel item={item} />
-            </Grid>
-          ))}
-        </Grid>
+        {travelData?.length !== undefined && travelData?.length > 0 ? (
+          <Grid container spacing={3} justifyContent="center">
+            {travelData?.map((item, index) => (
+              <Grid item key={index}>
+                <CardTravel item={item} />
+              </Grid>
+            ))}
+          </Grid>
+        ) : (
+          <EmptyState />
+        )}
       </Box>
-      <Grid container justifyContent={"center"} mt="2.5rem">
+      <Grid container className={classes.boxPagination}>
         <Pagination
           count={paginationRedux.totalPage}
           page={paginationRedux.page}
-          onChange={handleChange}
+          onChange={handleChangePagination}
           boundaryCount={2}
         />
       </Grid>
